@@ -3,18 +3,13 @@ package bank
 
 //Account stuff
 type Account struct {
-	Transactions              Transaction
-	Cost, AccountNo, Interest int64
+	Transactions                            Transaction
+	CURRENT, SAVINGS, BUSINESS, AccountType int
 }
 
 //NewAccount Creates and populates an account
-func NewAccount(AccNoIn int64, AccType string) *Account {
+func NewAccount(AccType int) *Account {
 	a := new(Account)
-	a.AccountNo = AccNoIn
-	switch AccType {
-	case "Basic":
-		a.Interest = 1
-		a.Cost = 0
-	}
+	a.AccountType = AccType
 	return a
 }

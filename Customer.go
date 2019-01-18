@@ -21,37 +21,37 @@ func NewCustomer(nameIn string) *Customer {
 }
 
 //OpenAccount opens a new account
-func OpenAccount(account Account, cust Customer) bool {
-	start := len(cust.Accounts)
-	cust.Accounts = append(cust.Accounts, account)
-	if start < len(cust.Accounts) {
+func (c *Customer) OpenAccount(account Account) bool {
+	start := len(c.Accounts)
+	c.Accounts = append(c.Accounts, account)
+	if start < len(c.Accounts) {
 		return true
 	}
 	return false
 }
 
 //Statement returns the value of each account and a list of the last 5 transactions
-func Statement(cust Customer) string {
+func (c *Customer) Statement() string {
 	var statement strings.Builder
-	for _, acc := range cust.Accounts {
+	for _, acc := range c.Accounts {
 		//Convert acc type to string
 		switch acc.AccountType {
 		case acc.CURRENT:
-			statement.WriteString("Current Account/n")
+			statement.WriteString("Current Account\n")
 		case acc.SAVINGS:
-			statement.WriteString("Savings Account/n")
+			statement.WriteString("Savings Account\n")
 		case acc.BUSINESS:
-			statement.WriteString("Business Account/n")
+			statement.WriteString("Business Account\n")
 		}
 		//Write last 5 Transactions
 		for i := 0; i < len(acc.Transactions); i++ {
 			if i < 5 {
 				a := strconv.Itoa(acc.Transactions[i].amount)
-				statement.WriteString(acc.Transactions[i].note + " " + a + "/n")
+				statement.WriteString(acc.Transactions[i].note + " " + a + "\n")
 			}
 		}
 		//Write value
-		statement.WriteString("Balance: " + strconv.Itoa(CalculateValue(acc)) + "/n")
+		statement.WriteString("Balance: " + strconv.Itoa(acc.CalculateValue()) + "\n")
 	}
 	return statement.String()
 }

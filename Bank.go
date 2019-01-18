@@ -12,6 +12,7 @@ type Bank struct {
 func NewBank(nameIn string) *Bank {
 	b := new(Bank)
 	b.BankName = nameIn
+	b.Customers = make(map[string]Customer)
 	return b
 }
 
@@ -20,4 +21,9 @@ func NewBankFull(nameIn string, lastAccNoIn int) *Bank {
 	b := new(Bank)
 	b.BankName = nameIn
 	return b
+}
+
+//AddCustomer adds a customer to the banks list of customers
+func (b *Bank) AddCustomer(cust Customer) {
+	b.Customers[cust.Name] = cust
 }

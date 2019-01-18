@@ -20,10 +20,10 @@ func NewAccount(AccType int) *Account {
 }
 
 //Deposit adds money to an account
-func Deposit(account Account, amount int) (bool, error) {
+func (a *Account) Deposit(amount int) (bool, error) {
 	if amount > 0 {
 		t := NewTransaction("Deposit", amount)
-		account.Transactions = append(account.Transactions, *t)
+		a.Transactions = append(a.Transactions, *t)
 		return true, nil
 	}
 	return false, errors.New("Deposit must be positive")
@@ -31,19 +31,19 @@ func Deposit(account Account, amount int) (bool, error) {
 }
 
 //Withdrawal adds money to an account
-func Withdrawal(account Account, amount int) (bool, error) {
+func (a *Account) Withdrawal(account Account, amount int) (bool, error) {
 	if amount > 0 {
 		t := NewTransaction("Withdrawal", -amount)
-		account.Transactions = append(account.Transactions, *t)
+		a.Transactions = append(a.Transactions, *t)
 		return true, nil
 	}
 	return false, errors.New("Withdrawal must be positive")
 }
 
 //CalculateValue determins the value of the account
-func CalculateValue(account Account) int {
+func (a *Account) CalculateValue() int {
 	total := 0
-	for _, t := range account.Transactions {
+	for _, t := range a.Transactions {
 		total += t.amount
 	}
 	return total

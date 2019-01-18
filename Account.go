@@ -13,6 +13,9 @@ type Account struct {
 func NewAccount(AccType int) *Account {
 	a := new(Account)
 	a.AccountType = AccType
+	a.CURRENT = 0
+	a.SAVINGS = 1
+	a.BUSINESS = 2
 	return a
 }
 
@@ -22,9 +25,9 @@ func Deposit(account Account, amount int) (bool, error) {
 		t := NewTransaction("Deposit", amount)
 		account.Transactions = append(account.Transactions, *t)
 		return true, nil
-	} else {
-		return false, errors.New("Deposit must be positive")
 	}
+	return false, errors.New("Deposit must be positive")
+
 }
 
 //Withdrawal adds money to an account
@@ -33,7 +36,15 @@ func Withdrawal(account Account, amount int) (bool, error) {
 		t := NewTransaction("Withdrawal", -amount)
 		account.Transactions = append(account.Transactions, *t)
 		return true, nil
-	} else {
-		return false, errors.New("Withdrawal must be positive")
 	}
+	return false, errors.New("Withdrawal must be positive")
+}
+
+//CalculateValue determins the value of the account
+func CalculateValue(account Account) int {
+	total := 0
+	for _, t := range account.Transactions {
+		total += t.amount
+	}
+	return total
 }

@@ -31,7 +31,7 @@ func (a *Account) Deposit(amount int) (bool, error) {
 }
 
 //Withdrawal adds money to an account
-func (a *Account) Withdrawal(account Account, amount int) (bool, error) {
+func (a *Account) Withdrawal(amount int) (bool, error) {
 	if amount > 0 {
 		t := NewTransaction("Withdrawal", -amount)
 		a.Transactions = append(a.Transactions, *t)
